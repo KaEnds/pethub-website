@@ -32,7 +32,7 @@ function Profile() {
             <li><a>Item 3</a></li>
           </ul>
         </div>
-        <a href='/' className="btn btn-ghost text-xl">Pethub</a>
+        <a href='/pethub-website/' className="btn btn-ghost text-xl">Pethub</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
