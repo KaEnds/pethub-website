@@ -1,13 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import {createBrowserRouter, RouterProvider,} from "react-router-dom";
+import {createBrowserRouter, RouterProvider, Navigate} from "react-router-dom";
 import './index.css'
-import App from './App.jsx'
 import Home from './pages/Home.jsx';
 import Profile from './components/Profile.jsx';
 
 const router = createBrowserRouter([
-  {path: "/pethub-website", element: <App />,},
+  {path: "/pethub-website", element: <Navigate to="/pethub-website/home" />,},
   {path: "/pethub-website/home", element: <Home />,},
   {path: "/pethub-website/profile", element: <Profile />,},
 
