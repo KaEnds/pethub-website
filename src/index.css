@@ -1,9 +1,19 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Athiti:wght@200;300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&family=Noto+Sans+Thai:wght@100..900&display=swap');
+
+#root {
+  margin: 0 auto;
+  text-align: center;
+}
+
+
 :root {
-  font-family: "Afacad Flux", sans-serif;
+  font-family: "Afacad Flux", sans-serif!important;
+  font-family: "IBM Plex Sans Thai", serif!important;
   font-optical-sizing: auto;
   font-style: normal;
   line-height: 1.5;
@@ -20,3 +30,58 @@
 
 }
 
+
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Webkit browsers */
+}
+
+.input-shadow{
+  box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, 0.4);
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.animate-pulses{
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+/* Custom CSS to reduce SVG size in the Quill toolbar */
+.ql-toolbar .ql-formats svg {
+  width: 16px;  /* Set a smaller width */
+  height: 16px; /* Set a smaller height */
+}
+
+@media (max-width: 768px){
+  .ql-toolbar .ql-formats svg {
+    width: 14px;  /* Set a smaller width */
+    height: 14px; /* Set a smaller height */
+  }
+}
+
+input[type="date"] {
+  background-color: white !important; /* Force the background to be white */
+  color: black !important;            /* Force the text to be black */
+  appearance: auto; 
+}

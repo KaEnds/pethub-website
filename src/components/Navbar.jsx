@@ -1,0 +1,125 @@
+import logo from '../../public/logo.svg';
+import { useState, useEffect, useRef } from 'react';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+export default function Navbar() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null); // Ref to track dropdown element
+  const [isLogin, setIsLogin] = useState(true);
+  const [username, setUsername] = useState('Chatchanan Boonpa');
+  const [role, setRole] = useState('Client');
+
+
+  // Function to toggle dropdown visibility
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  // Function to handle clicks outside of the dropdown
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownOpen(false); // Close dropdown if click is outside
+    }
+  };
+
+  const logout = () => {
+    setIsLogin(false)
+  }
+
+  // Add event listener for clicks outside the dropdown
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+
+  return (
+    <>
+    <ToastContainer position="top-center" />
+    <div className="fixed top-0 left-0 right-0 dropdown z-50">
+      <div className="navbar border-b-2 bg-white px-4 md:px-20 xl:px-40">
+        {/* Mobile Navbar Toggle */}
+        <div className="xl:hidden md:mr-5">
+          <a href="/pethub-website/home"><img src={logo} alt="logo" width={40} /></a>
+        </div>
+
+        <div ref={dropdownRef}>
+          <div
+            tabIndex={0}
+            role="button"
+            className="flex justify-center items-center md:btn w-14 max-sm:text-[3vw] md:bg-white max-md:text-[2vw] h-[10vw] md:w-16 max-w-16 max-h-12 font-medium btn-ghost xl:hidden"
+            onClick={toggleDropdown}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-list" viewBox="0 0 16 16">
+              <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+            </svg>
+          </div>
+
+          {/* Dropdown Menu */}
+          <ul
+            tabIndex={0}
+            className={`menu menu-sm dropdown-content text-pethub-color1 bg-white z-10 mt-5 p-2 py-5 absolute shadow top-12 right-0 left-0 ${
+              isDropdownOpen ? 'opacity-100' : 'opacity-0 hidden'
+            }`}
+          >
+            <li><a href="/pethub-website/home" className="block w-full text-center text-md">Home</a></li>
+            <li><a href="/pethub-website/profile" className="block w-full text-center text-md">Profile</a></li>
+            <li><a href="/pethub-website/about" className="block w-full text-center text-md">About</a></li>
+            <li><a href="/pethub-website/contact" className="block w-full text-center text-md">Contact</a></li>
+            <li><a href="/pethub-website/hostsignup" className="block w-full text-center text-md">สมัครเป็น partner</a></li>
+            <li className={role === "Admin" ? '' : 'hidden'}><a className="block w-full text-center text-md" href="/pethub-website/hotelapprove">Approve</a></li>
+          </ul>
+        </div>
+
+        {/* Desktop Navbar */}
+        <div className="navbar-start text-pethub-color1">
+          <ul className="gap-10 px-1 items-center hidden xl:flex">
+            <li><a href="/pethub-website/home"><img src={logo} alt="logo" width={40} /></a></li>
+            <li><a href="/pethub-website/home" className="text-pethub-color6">Home</a></li>
+            <li><a href="/pethub-website/profile">Profile</a></li>
+            <li><a href="/pethub-website/about">About</a></li>
+            <li><a href="/pethub-website/contact">Contact</a></li>
+            <li className={role === "Admin" ? '' : 'hidden'}><a href="/pethub-website/hotelapprove">Approve</a></li>
+          </ul>
+        </div>
+
+        {/* Sign In / Sign Out Logic */}
+        <div className="navbar-end">
+          {isLogin ? (
+            <div>
+              <ul className="flex gap-10 px-1 items-center">
+                <div className="cursor-pointer flex items-center gap-4 max-md:hidden">
+                    {role == "Host" ? 
+                    <li><a href="/pethub-website/hostsignup" className="text-pethub-color6">สมัครเป็น partner (ทำต่อ) </a></li>
+                    :
+                    <div className='flex items-center gap-4'>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                        <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                      </svg>
+                      <div>{username}</div>
+                    </div>
+                    }
+                  </div>
+                <div className="cursor-pointer flex" onClick={logout}>
+                  <div className="md:text-sm">logout</div>
+                </div>
+              </ul>
+            </div>
+          ) : (
+            <div>
+              <ul className="flex gap-10 px-1 items-center">
+                <li><a href="/pethub-website/hostsignup" className="text-pethub-color6 hidden xl:block">มาเป็น partner กับเรา</a></li>
+                <li><a href="/pethub-website/signin" className="flex justify-center items-center rounded-md md:btn bg-pethub-color1 md:bg-pethub-color1 text-white md:text-white w-[20vw] max-sm:text-[3vw] max-md:text-[2vw] h-[10vw] md:w-28 max-w-28 max-h-12 font-medium">Sign in</a></li>
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+    </>
+  );
+}
